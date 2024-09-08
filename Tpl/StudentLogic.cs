@@ -1,3 +1,5 @@
+using System.Threading.Tasks;
+
 namespace Tpl;
 
 public static class StudentLogic
@@ -30,8 +32,13 @@ public static class StudentLogic
         var task = Task.Run(() =>
         {
             Console.WriteLine("Task is working");
-            Task.Delay(TimeSpan.FromSeconds(2)).Wait();
+            Task.Delay(TimeSpan.FromSeconds(3)).Wait();
         });
+
+        for (int i = 0; i < 300; i++)
+        {
+            Console.WriteLine(i);
+        }
 
         return task;
     }
@@ -43,8 +50,21 @@ public static class StudentLogic
 
     public static Task WaitingForChildrenToComplete()
     {
-        var childTask1 = Task.Run(() => Task.Delay(1000));
-        var childTask2 = Task.Run(() => Task.Delay(5000));
+        var childTask1 = Task.Run(() =>
+        {
+            Console.WriteLine("Task is working");
+            Task.Delay(TimeSpan.FromSeconds(3)).Wait();
+        });
+        var childTask2 = Task.Run(() =>
+        {
+            Console.WriteLine("Task is working");
+            Task.Delay(TimeSpan.FromSeconds(1)).Wait();
+        });
+
+        for (int i = 0; i < 30000; i++)
+        {
+            Console.WriteLine(i);
+        }
 
         return Task.WhenAll(childTask1, childTask2);
     }
