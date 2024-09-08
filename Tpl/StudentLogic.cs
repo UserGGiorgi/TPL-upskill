@@ -30,7 +30,7 @@ public static class StudentLogic
         var task = Task.Run(() =>
         {
             Console.WriteLine("Task is working");
-            Task.Delay(TimeSpan.FromSeconds(10)).Wait();
+            Task.Delay(TimeSpan.FromSeconds(2)).Wait();
         });
 
         return task;
@@ -44,16 +44,9 @@ public static class StudentLogic
     public static Task WaitingForChildrenToComplete()
     {
         var childTask1 = Task.Run(() => Task.Delay(1000));
-        var childTask2 = Task.Run(() => Task.Delay(1000));
+        var childTask2 = Task.Run(() => Task.Delay(5000));
 
-        // Create a parent task that will wait for all child tasks to complete
-        var parentTask = Task.Run(() =>
-        {
-            return Task.WhenAll(childTask1, childTask2);
-        });
-
-        // Return the parent task
-        return parentTask;
+        return Task.WhenAll(childTask1, childTask2);
     }
 
     public static Task IsCompleted()

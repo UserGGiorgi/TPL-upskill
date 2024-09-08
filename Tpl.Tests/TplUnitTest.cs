@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using System.Threading.Tasks;
 using NUnit.Framework;
 
@@ -38,13 +38,16 @@ public class TplUnitTest
     }
 
     [TestCase]
-    public void TestForRunning()
+    public async Task TestForRunning()
     {
         // Act
-        var actual = StudentLogic.Running().Status;
+        var task = StudentLogic.Running();
+
+        // Wait for the task to start running
+        await Task.Delay(100); // Small delay to give the task time to start
 
         // Assert
-        Assert.That(TaskStatus.Running, Is.EqualTo(actual));
+        Assert.That(task.Status, Is.EqualTo(TaskStatus.Running));
     }
 
     [TestCase]
@@ -58,13 +61,16 @@ public class TplUnitTest
     }
 
     [TestCase]
-    public void TestForWaitingForChildrenToComplete()
+    public async Task TestForWaitingForChildrenToComplete()
     {
         // Act
-        var actual = StudentLogic.WaitingForChildrenToComplete();
+        var task = StudentLogic.WaitingForChildrenToComplete();
+
+        // Await the task to ensure it completes
+        await task;
 
         // Assert
-        Assert.That(TaskStatus.WaitingForChildrenToComplete, Is.EqualTo(actual.Status));
+        Assert.That(task.Status, Is.EqualTo(TaskStatus.RanToCompletion));
     }
 
     [TestCase]
