@@ -1,5 +1,3 @@
-using System.Threading.Tasks;
-
 namespace Tpl;
 
 public static class StudentLogic
